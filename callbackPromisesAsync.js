@@ -63,9 +63,9 @@ function lastEditinSeconds(){
 }
 */
 
-/*
-Using promises
-*/
+
+//Using promises
+
 
 const posts=[
     {title:'Post One',body:'Body One'},
@@ -93,55 +93,105 @@ let promiseFun=()=>{
 }
 
 function createPost(post){
-    console.log(`before creating post user time was ${user.activityTime}`)
-
+    console.log(`before creating post user time was ${user.activityTime}`);
     return new Promise((resolve,reject)=>{
         setTimeout(()=>{
             posts.push(post);
             const error=false;
             if(!error){
+                console.log(`After creating post ${post.title}`);
+                console.log(posts);
+                user.activityTime=new Date().getTime();
+                console.log(`User last Activity is ${user.activityTime}`);
                 resolve();
+
             }
             else{
                 reject('Error Something went wrong');
             }
-            console.log(`After creating post ${post.title}`);
-            console.log(posts);
-            user.activityTime=new Date().getTime();
-            console.log(`User last Activity is ${user.activityTime}`);
+        
         },1000);
     });
 
 };
 
-function updateLastUserActivity(){
-    return new Promise((resolve,reject)=>{
-        setTimeout(()=>{
-
-        },1000);
-    });
-}
-
-
-createPost({title:'Post Three',body:'Body Three'})
-    .then(promiseFun)
-    .catch(err=>console.log(err));
-
-    
-
 function deletePost(){
     return new Promise( (resolve,reject)=>{
         setTimeout(()=>{
-            const pop1=posts.pop();
-            if(pop1===undefined){
-                reject();
+            if(posts.length>0){
+                
+                resolve(posts.pop());
             }
-            else{
-                resolve();
+            else{   
+                reject('Array is Empty now');
             }
-        },3000);
+        },2000);
     })
 }
+
+
+
+async function init(){
+    await createPost({title:'Post Three',body:'Body Three'})
+    .then(()=>{
+        getPosts();
+        deletePost().then(()=>{
+            getPosts();
+            deletePost().then(()=>{
+                getPosts();
+                deletePost().then(()=>{
+                    getPosts();
+                    deletePost().then(()=>{
+
+                    })
+                    .catch((err)=>{
+                        console.log(err);
+                    });
+                }).catch((err)=>{
+                    console.log(err);
+                });
+            }).catch((err)=>{
+                console.log(err);
+            });
+        }).catch((err)=>{
+            console.log(err);
+        })
+    }).catch(err=> console.log(err));
+}
+init();
+
+// createPost({title:'Post Three',body:'Body Three'})
+//     .then(()=>{
+//         getPosts();
+//         deletePost().then(()=>{
+//             getPosts();
+//             deletePost().then(()=>{
+//                 getPosts();
+//                 deletePost().then(()=>{
+//                     getPosts();
+//                     deletePost().then(()=>{
+
+//                     })
+//                     .catch((err)=>{
+//                         console.log(err);
+//                     });
+//                 }).catch((err)=>{
+//                     console.log(err);
+//                 });
+//             }).catch((err)=>{
+//                 console.log(err);
+//             });
+//         }).catch((err)=>{
+//             console.log(err);
+//         })
+//     }).catch(err=> console.log(err));
+
+
+    
+
+
+
+/*
 function deletePost2(){
     return new Promise( (resolve,reject)=>{
         setTimeout(()=>{
@@ -184,17 +234,18 @@ function deletePost4(){
 function deletePost5(){
     return new Promise( (resolve,reject)=>{
         setTimeout(()=>{
-            const pop1=posts.pop();
-            if(pop1===undefined){
-                reject();
+            
+            if(posts.length>0){
+                const postElement=posts.pop();
+                resolve();
             }
             else{   
-                resolve();
+                reject();
             }
         },5000);
     })
 }
-
+*/
 
 
     
@@ -221,12 +272,88 @@ deletePost().then(()=>{
 //deletePost().then(getPosts).catch(err=>console.log('Array is empty'));
 //deletePost().then(getPosts).catch(err=>console.log('Array is empty'));
 
-/*Promise.all -
-const promise1=Promise.resolve('Hello world');
-const promise2=20;
-const promise3=new Promise((resolve,reject)=>
-setTimeout(resolve,2000,'Goodbye'));
-Promise.all([promise1,promise2,promise3]).then(values=>console.log(values))
+//Promise.all -
+// const promise1=Promise.resolve('Hello world');
+// const promise2=20;
+// const promise3=new Promise((resolve,reject)=>
+// setTimeout(resolve,2000,'Goodbye'));
+// Promise.all([promise1,promise2,promise3]).then(values=>console.log(values))
 
+
+
+
+// //Async wait
+
+// console.log('person1 ticket');
+// console.log('person2 ticket');
+// console.log('person3 ticket');
+
+// const friendBringingTicket=new Promise((resolve,reject)=>{
+
+//     setTimeout(()=>{
+//         resolve('ticket');
+//     },2000);
+// });
+
+// const getPopcorn=friendBringingTicket.then((t)=>{
+//     console.log('friends have ticket');
+//     console.log('f1 we should go in ');
+//     console.log('f2:I am hungry');
+//     return new Promise((resolve,reject)=>{resolve(`${t} popcorn`)});
+// });
+
+// const getButter=getPopcorn.then((t)=>{
+// console.log('f1: i got some popcorn');
+// console.log('lets go in');
+// console.log('f2:i need butter in it')
+
+// return new Promise((resolve,reject)=>{resolve(`${t} butter`)});
+// });
+// getButter.then((t)=>{console.log(t)});
+
+
+// const preMovie=async ()=>'preMovie';
+// //it returns a promise
+// preMovie().then((t)=>{
+//     console.log(t);
+// });
+
+/*
+const preMovie= async ()=>{
+
+    const bringTicket=new Promise((resolve,reject)=>{
+        setTimeout(()=>{resolve('shows ticket')},3000);
+    });
+
+    // const getPopcorn=new Promise((resolve,reject)=>{
+    //     resolve('popcorn')
+    // });
+
+    // const applyButter= new Promise((resolve,reject)=>{resolve('butter ')});
+    // const getCoke= new Promise((resolve,reject)=>{resolve('Coke ')});
+    // const getCandy= new Promise((resolve,reject)=>{resolve('Candy ')});
+    // let ticket=await bringTicket;    
+    // let [popcorn,butter,candy,coke]=await Promise.all([getPopcorn,applyButter,getCandy,getCoke]);
+
+    
+    // 
+    // Each of these should be done together 
+    // once everyone is done show tickets only than
+    // console.log(`${popcorn} ${butter} ${candy} ${coke}`);
+    let ticket;
+    try{
+        ticket=await bringTicket; 
+    }
+    catch(e){
+        ticket='no tickets available'
+    }
+    return ticket;
+
+}
+
+preMovie().then((t)=>{console.log(`person3  ${t}`)});
+
+
+console.log('person 5 ticket');
+console.log('person 6 ticket');
 */
-
