@@ -132,31 +132,58 @@ function deletePost(){
 
 
 async function init(){
-    await createPost({title:'Post Three',body:'Body Three'})
-    .then(()=>{
-        getPosts();
-        deletePost().then(()=>{
-            getPosts();
-            deletePost().then(()=>{
-                getPosts();
-                deletePost().then(()=>{
-                    getPosts();
-                    deletePost().then(()=>{
+    try{
+        
+    const msg1=await createPost({title:'Post Three',body:'Body Three'});
+    const msg2=await getPosts();
+    
+    const msg3=await deletePost();
+    const msg4=await getPosts();
+    
+    const msg5=await deletePost();
+    
+    const msg6=await getPosts();
+    
+    const msg7=await deletePost();
+    
+    const msg8=await getPosts();
+    
+    const msg9=await deletePost();
+    const msg10=await getPosts();
+    
+    }
+    catch(err){
+        console.log(err);
+    }
 
-                    })
-                    .catch((err)=>{
-                        console.log(err);
-                    });
-                }).catch((err)=>{
-                    console.log(err);
-                });
-            }).catch((err)=>{
-                console.log(err);
-            });
-        }).catch((err)=>{
-            console.log(err);
-        })
-    }).catch(err=> console.log(err));
+
+
+    
+
+    // .then(()=>{
+    //     getPosts();
+    //     deletePost().then(()=>{
+    //         getPosts();
+    //         deletePost().then(()=>{
+    //             getPosts();
+    //             deletePost().then(()=>{
+    //                 getPosts();
+    //                 deletePost().then(()=>{
+
+    //                 })
+    //                 .catch((err)=>{
+    //                     console.log(err);
+    //                 });
+    //             }).catch((err)=>{
+    //                 console.log(err);
+    //             });
+    //         }).catch((err)=>{
+    //             console.log(err);
+    //         });
+    //     }).catch((err)=>{
+    //         console.log(err);
+    //     })
+    // }).catch(err=> console.log(err));
 }
 init();
 
@@ -253,12 +280,7 @@ function deletePost5(){
 
 
 
-getPosts();
-deletePost().then(()=>{
-    getPosts();
-    console.log(posts);
-    
-}).catch(err=>console.log('Array is empty'));
+
 
 
 // deletePost2().then(getPosts).catch(err=>console.log('Array is empty'));

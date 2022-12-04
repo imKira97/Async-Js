@@ -106,12 +106,34 @@ function reachedManali(){
     
 }
 
-buyCar().then((msg)=>{
-    console.log(msg);
-    planTrip().then((msg)=>{
-        console.log(msg);
-        reachedManali().then((msg)=>{
-            console.log(msg);
-        });
-    })
-})
+// buyCar().then((msg)=>{
+//     console.log(msg);
+//     planTrip().then((msg)=>{
+//         console.log(msg);
+//         reachedManali().then((msg)=>{
+//             console.log(msg);
+//         });
+//     })
+// })
+
+
+/*here we are writing .then for each which might be not good for multiple 
+we can use async functions and async await
+
+*/
+
+async function fun1(){
+
+    try{
+        const msg1=await buyCar();
+        console.log(msg1);
+        const msg2=await planTrip();
+        console.log(msg2);
+        const msg3=await reachedManali();
+        console.log(msg3);
+    }
+    catch(err){
+            console.log(err);
+        }
+}
+fun1();
