@@ -63,7 +63,13 @@ function toCreateListItem(userDetails){
     deleteBtn.className='deleteBtn';
     deleteBtn.style.border='3px solid red';
     deleteBtn.addEventListener('click',function(){
-        localStorage.removeItem(userDetails.email);
+        
+        axios.delete(`https://crudcrud.com/api/76e35193c63443adae3f0a47809d2e04/appointmentData/${userDetails._id}`)
+        .then((res)=>{
+            console.log(res);
+        })
+        .catch((err)=>{console.log(err);})
+        
         li.remove();
     });
     li.appendChild(deleteBtn);
