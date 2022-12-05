@@ -8,7 +8,7 @@ myForm.addEventListener('submit',onSubmit);
 
 document.addEventListener('DOMContentLoaded',showUser);
 function showUser(){
-    axios.get('https://crudcrud.com/api/76e35193c63443adae3f0a47809d2e04/appointmentData')
+    axios.get('https://crudcrud.com/api/e2f1ee9cf6db43a2a7b33da74546160d/appointmentData')
         .then((res)=>{
             Object.keys(res.data).forEach((k)=>{
                 const userInfo=res.data[k];
@@ -37,8 +37,9 @@ function onSubmit(e){
             'email':emailInput.value
 
         }
+        
 
-        axios.post('https://crudcrud.com/api/76e35193c63443adae3f0a47809d2e04/appointmentData',user)
+        axios.post('https://crudcrud.com/api/e2f1ee9cf6db43a2a7b33da74546160d/appointmentData',user)
         .then((res)=>{console.log(res.data);
         toCreateListItem(res.data);
         })
@@ -64,7 +65,7 @@ function toCreateListItem(userDetails){
     deleteBtn.style.border='3px solid red';
     deleteBtn.addEventListener('click',function(){
         
-        axios.delete(`https://crudcrud.com/api/76e35193c63443adae3f0a47809d2e04/appointmentData/${userDetails._id}`)
+        axios.delete(`https://crudcrud.com/api/e2f1ee9cf6db43a2a7b33da74546160d/appointmentData/${userDetails._id}`)
         .then((res)=>{
             console.log(res);
         })
@@ -82,8 +83,14 @@ function toCreateListItem(userDetails){
     editBtn.className='editBtn';
     editBtn.style.border='3px solid blue';
     editBtn.addEventListener('click',function(){
-            document.getElementById('name').value=userDetails.name;
-            document.getElementById('email').value=userDetails.email;
+            document.getElementById('username').value=userDetails.name;
+            document.getElementById('useremail').value=userDetails.email;
+            
+            axios.delete(`https://crudcrud.com/api/e2f1ee9cf6db43a2a7b33da74546160d/appointmentData/${userDetails._id}`)
+        .then((res)=>{
+            console.log(res);
+        })
+        .catch((err)=>{console.log(err);})
             li.remove();
     });
     li.appendChild(editBtn);
